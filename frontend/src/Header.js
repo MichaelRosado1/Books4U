@@ -1,20 +1,71 @@
-import React from 'react'
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton";
+import MenuIcon from "@material-ui/icons/Menu";
+import green from "@material-ui/core/colors/green";
+import Search from "./SearchBar";
 
+// react.school/material-ui
 
-function Header() {
+const useStyles = makeStyles((theme) => ({
+  menuButton: {
+    marginRight: theme.spacing(2)
+  },
+  title: {
+    flexGrow: 1
+  },
+  customColor: {
+    // or hex code, this is normal CSS background-color
+    backgroundColor: green[500]
+  },
+  customHeight: {
+    minHeight: 200
+  },
+  offset: theme.mixins.toolbar
+}));
 
-	return (
-		<div className='Header'>
-			<h1>Books 4 U</h1>
-			<div className='navbar'>
-				<ul id='nav'>
-					<li>Sign up</li>
-					<li>Login</li>
-					<li>List</li>
-				</ul>
-			</div>
-		</div>
-	);
+export default function ButtonAppBar() {
+  const classes = useStyles();
+  const [example, setExample] = useState("primary");
+  const isCustomColor = example === "customColor";
+  const isCustomHeight = example === "customHeight";
+  return (
+    <React.Fragment>
+      <AppBar
+        color={isCustomColor || isCustomHeight ? "primary" : example}
+        className={`${isCustomColor && classes.customColor} ${
+          isCustomHeight && classes.customHeight
+        }`}
+      >
+        <Toolbar>
+          <IconButton
+            edge="start"
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="menu"
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" className={classes.title}>
+            Books4U
+          </Typography>
+          <IconButton color="inherit" onClick={() => setExample("default")}>
+            Register
+          </IconButton>
+          <IconButton color="inherit" onClick={() => setExample("primary")}>
+            Log In
+          </IconButton>
+          <IconButton color="inherit" onClick={() => setExample("secondary")}>
+            My List
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+      <Toolbar />
+      Have Search bar component
+      <Search/>
+    </React.Fragment>
+  );
 }
-
-export default Header;
