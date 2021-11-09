@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default function ButtonAppBar() {
+export default function Header() {
   const classes = useStyles();
   const [example, setExample] = useState("primary");
   const isCustomColor = example === "customColor";
@@ -156,8 +156,6 @@ export default function ButtonAppBar() {
         </Toolbar>
       </AppBar>
       <Toolbar />
-      Have Search bar component
-      <Search/>
     </React.Fragment>
   );
 }

@@ -28,12 +28,13 @@ export default function BasicCard(props) {
   const [post, setPost] = React.useState(null);
 
   React.useEffect(() => {
-    axios.get('http://localhost:3002/author')
+    axios.get('http://localhost:3002')
       .then((response) => {
         setPost(response.data.message);
       });
   }, []);
 
+  
 
   //if no data is returned we shouldn't display anything
    return (
