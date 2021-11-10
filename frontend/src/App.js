@@ -2,26 +2,30 @@ import './App.css';
 import Header from './Header.js';
 import BookCard from './BookCard'
 import React from 'react';
-import SearchBar from './SearchBar';
+import SearchBar from 'material-ui-search-bar';
 import { getSuggestedQuery } from '@testing-library/dom';
+import axios from 'axios';
 
 require('dotenv').config();
 
 function App() {
-  const [query, setQuery] = React.useState('');
+  const [results, setResults] = React.useState([]);
+  const [searchTerm, setSearchTerm] = React.useState();
 
-  const handleSubmit = (event) => {
+  function handleSubmit(event){
     event.preventDefault();
-
+    let url = 'http://localhost:3002/search/';
+    url += searchTerm;
+    console.log(searchTerm)
+    axios.get(url)
+      .then((response) => {
+        setResults(response.data);
+      }).catch((e) => console.log(e));
   }
 
-  const handleChange = () => {
-
-  }
-
-  const handleSearch = () => {
-
-  }
+  const handleChange = (searchVal) => {
+    setSearchTerm(searchVal.value);
+  };
 
   return (
     <div className="App">
@@ -29,12 +33,14 @@ function App() {
       <br />
       <form onSubmit={event => handleSubmit(event)}>
         <SearchBar
-          value={query}
-          onChange={(newValue) => getSuggestedQuery(newValue)}
-          onRequestSearch={() => handleSearch(query)}/>
+          value={searchTerm}
+          onChange={(searchVal) => handleChange(searchVal)}
+        />
       </form>
       <br />
-      <BookCard Title="Ender's Game" Author="Orson Scott Card" Rating='5' />
+      {results.forEach((ob) => {
+        <BookCard Title={ob.title} Author={ob.authorName} Rating='5'/>
+      })}
     </div>
   );
 }
