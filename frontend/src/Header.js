@@ -14,6 +14,10 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import BookCard from "./BookList"; 
+import API from "./MockData";
+
+import {Modal} from 'react-responsive-modal';
 
 // react.school/material-ui
 
@@ -35,31 +39,27 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-
-export default function Header() {
+export default function Header(props){
   const classes = useStyles();
   const [example, setExample] = useState("primary");
   const isCustomColor = example === "customColor";
   const isCustomHeight = example === "customHeight";
-  const [open, setOpen] = React.useState(false);
-  const [openLogin, setOpenLogin] = React.useState(false);
+  const [open, openModal] = React.useState(false);
+  const [openUser, openUserModel] = React.useState(false);
 
-  const handleOpenLogin = () => {
-    setOpenLogin(true);
+  const toggleUserModel = () => { 
+    openUserModel(!openUser)
+
   }
 
-  const handleLoginClose = () => {
-    setOpenLogin(false);
+
+  const toggleModal = () => {
+    openModal(!open)
   }
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  }
-
-  const handleClose = () => {
-    setOpen(false);
-  }
-
+ 
+  {/** Fake Data Stuff (to make sure that we can connec) */}
+    
 
   return (
     <React.Fragment>
@@ -81,9 +81,9 @@ export default function Header() {
           <Typography variant="h6" className={classes.title}>
             Books4U
           </Typography>
-          <IconButton color="inherit" onClick={handleClickOpen}>
+          <IconButton color="inherit" onClick={toggleModal}>
             Register
-            <Dialog open={open} onClose={handleClose}>
+            <Dialog open={open} handleClose={toggleModal}>
               <DialogTitle>Register</DialogTitle>
               <DialogContent>
                 <DialogContentText>
@@ -112,16 +112,16 @@ export default function Header() {
                   />
               </DialogContent>
               <DialogActions>
-                <Button onClick={handleClose}>Cancel</Button>
+                <Button onClick={toggleModal}>Cancel</Button>
                 {/* this needs to be changed to actually register an account */}
-                <Button onClick={handleClose}>Register</Button>
+                <Button onClick={toggleModal}>Register</Button>
               </DialogActions>
             </Dialog>
           </IconButton>
 
-          <IconButton color="inherit" onClick={handleOpenLogin}>
+          <IconButton color="inherit" onClick={toggleUserModel}>
             Log In
-            <Dialog open={openLogin} onClose={handleLoginClose}>
+            <Dialog open={openUser} onClose={toggleUserModel}>
               <DialogTitle>Log in</DialogTitle>
               <DialogContent>
                 <DialogContentText>
@@ -143,19 +143,18 @@ export default function Header() {
                   />
               </DialogContent>
               <DialogActions>
-                <Button onClick={handleLoginClose}>Cancel</Button>
+                <Button onClick={toggleUserModel}>Cancel</Button>
                 {/* this needs to be changed to actually register an account */}
-                <Button onClick={handleLoginClose}>Register</Button>
+                <Button onClick={toggleUserModel}>Register</Button>
               </DialogActions>
             </Dialog>
           </IconButton>
-          
-          <IconButton color="inherit" onClick={() => setExample("secondary")}>
-            My List
-          </IconButton>
+
+
+          {/** ToReadList */}
         </Toolbar>
       </AppBar>
       <Toolbar />
     </React.Fragment>
   );
-}
+}; 
