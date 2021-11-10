@@ -7,9 +7,15 @@ const db = mysql.createConnection({
 	host: '34.136.110.9',
 	user: 'root', 
 	password:'411', 
-	database:'Books4U', 
+	database:'Books4U' 
 }); 
-db.connect();
+
+db.connect(function (err) {
+	if (err) {
+		console.error('error connecting: ', err);
+		return;
+	}
+});
 
 
 

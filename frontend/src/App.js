@@ -1,22 +1,21 @@
 import './App.css';
 import Header from './Header.js';
 import BookCard from './BookCard'
-import React from 'react';
+import React, { useState } from 'react';
 import SearchBar from 'material-ui-search-bar';
-import { getSuggestedQuery } from '@testing-library/dom';
 import axios from 'axios';
 
 require('dotenv').config();
 
 function App() {
-  const [results, setResults] = React.useState([]);
-  const [searchTerm, setSearchTerm] = React.useState();
-
+  const [results, setResults] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchMade, setSearchMade] = useState(false);
   function handleSubmit(event){
     event.preventDefault();
+    setSearchMade(true);
     let url = 'http://localhost:3002/search/';
     url += searchTerm;
-    console.log(searchTerm)
     axios.get(url)
       .then((response) => {
         setResults(response.data);
@@ -24,7 +23,8 @@ function App() {
   }
 
   const handleChange = (searchVal) => {
-    setSearchTerm(searchVal.value);
+    console.log(searchVal);
+    setSearchTerm(searchVal);
   };
 
   return (
@@ -38,9 +38,9 @@ function App() {
         />
       </form>
       <br />
-      {results.forEach((ob) => {
+      {(searchMade === true ? results.forEach((ob) => {
         <BookCard Title={ob.title} Author={ob.authorName} Rating='5'/>
-      })}
+      }) : <h1> Search to see results </h1>)}
     </div>
   );
 }
