@@ -46,6 +46,8 @@ export default function Header(props){
   const isCustomHeight = example === "customHeight";
   const [open, openModal] = React.useState(false);
   const [openUser, openUserModel] = React.useState(false);
+  const [openRating, openRatingModal] = React.useState(false);
+  const [openGenre, openGenreModal] = React.useState(false);
 
   const toggleUserModel = () => { 
     openUserModel(!openUser)
@@ -57,6 +59,13 @@ export default function Header(props){
     openModal(!open)
   }
 
+  const toggleRatingModal = () => {
+    openRatingModal(!openRating)
+  }
+ 
+  const toggleGenreModal = () => {
+    openGenreModal(!openGenre)
+  }
  
   {/** Fake Data Stuff (to make sure that we can connec) */}
     
@@ -150,8 +159,36 @@ export default function Header(props){
             </Dialog>
           </IconButton>
 
+          <IconButton color="inherit" onClick={toggleRatingModal}>
+            Average Rating
+            <Dialog open={openRating} onClose={toggleRatingModal}>
+              <DialogTitle>Average Author Rating</DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  Average Author Rating
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={toggleRatingModal}>Cancel</Button>
+              </DialogActions>
+            </Dialog>
+          </IconButton>
 
-          {/** ToReadList */}
+          <IconButton color="inherit" onClick={toggleGenreModal}>
+            Drama or Fiction
+            <Dialog open={openGenre} onClose={toggleGenreModal}>
+              <DialogTitle>Drama or Fiction</DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  Books that are Drama or Fiction
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={toggleGenreModal}>Cancel</Button>
+              </DialogActions>
+            </Dialog>
+          </IconButton>
+          
         </Toolbar>
       </AppBar>
       <Toolbar />

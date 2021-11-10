@@ -16,7 +16,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import API from "./MockData";
 import SearchBar from './SearchBar';
 import { getSuggestedQuery } from '@testing-library/dom';
-import { cardActionAreaClasses, cardHeaderClasses } from '@mui/material';
+import { cardActionAreaClasses, cardHeaderClasses, Rating } from '@mui/material';
 
 require('dotenv').config();
 
@@ -24,6 +24,8 @@ function App() {
   const [results, setResults] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchMade, setSearchMade] = useState(false);
+
+
   function handleSubmit(event){
     event.preventDefault();
     setSearchMade(true);
@@ -50,35 +52,40 @@ function App() {
       });
   }, []);
 
-
+  const[ISBN] = useState(''); 
+  const[UserId] = useState(''); 
   const [list, setList] = useState(API);
+  const [Rating, setRating] = useState(API);
 
+
+  /* Insert */   
   const addToList = i => {
-    setList(prevState =>
-      prevState.map((item, o) => {
-        if (i === o) {
-          return {
-            ...item,
-            inList: true
-          };
-        }
-        return item;
-      })
-    );
+    axios.post('http://localhost:3002/api/insert', {
+      UserId: UserId, 
+      ISBN: ISBN
+    }).then(() => {
+      alert('success insert')
+    })
   };
 
+  /*Update*/
+  const updateRating = i => {
+    axios.post('http://localhost:3002/api/update', {
+      UserId: UserId, 
+      Rating: Rating, 
+    }).then(() => {
+      alert('success insert')
+    })
+  };
+
+  /* Delete */   
   const removeFromList = i => {
-    setList(prevList =>
-      prevList.map((item, o) => {
-        if (i === o) {
-          return {
-            ...item,
-            inList: false
-          };
-        }
-        return item;
-      })
-    );
+    axios.delete('http://localhost:3002/api/delete', {
+      ISBN: ISBN, 
+
+    }).then(() => {
+      alert('success insert')
+    })
   };
 
   const returnBooks = () => (
@@ -118,7 +125,7 @@ function App() {
                 <Typography variant="body2"> Rating: {item.rating} </Typography>
               </CardContent><CardActions>
                   <Button size="small">Remove from List {() => removeFromList(i)}</Button>
-                  <Button size="small">Edit Rating</Button> {/** Add functionality */}
+                  <Button size="small">Edit Rating {() => updateRating(i)}</Button>
                 </CardActions></>
             )}
           </Card>
@@ -130,16 +137,18 @@ function App() {
     <div className="App">
       <Header />
       <br />
+      {returnToReadList()}
       <form onSubmit={event => handleSubmit(event)}>
         <SearchBar
           value={searchTerm}
           onChange={(searchVal) => handleChange(searchVal)}
         />
       </form>
+      {returnBooks()}
       <br />
-      {(searchMade === true ? results.forEach((ob) => {
+{/*       {(searchMade === true ? results.forEach((ob) => {
         <BookCard Title={ob.title} Author={ob.authorName} Rating='5'/>
-      }) : <h1> Search to see results </h1>)}
+      }) : <h1> Search to see results </h1>)} */}
     </div>
   );
 }

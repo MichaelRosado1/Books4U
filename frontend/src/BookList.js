@@ -18,9 +18,7 @@ If you get an error in the console of the chrome tab you are trying to see the s
     from origin 'http://localhost:3000' has been blocked by CORS policy: 
     No 'Access-Control-Allow-Origin' header is present on the requested 
     resource'
-
     Download the chrome extension called 'Allow CORS: Access-Control-Allow-Origin'
-
     When you are on the chrome tab, click the extension and select the toggle
     on and reload the page, the get request should go through. 
  ***/
