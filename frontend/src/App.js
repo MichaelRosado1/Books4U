@@ -39,7 +39,6 @@ function App() {
     <div className="App">
       <Header />
       <br />
-      {returnToReadList()}
       <form onSubmit={event => handleSubmit(event)}>
         <SearchBar
           value={searchTerm}
@@ -47,7 +46,6 @@ function App() {
           onCancelSearch={() => setResults([])} 
         />
       </form>
-      {returnBooks()}
       <br />
       {results.map((val) => {
         return (

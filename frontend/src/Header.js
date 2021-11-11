@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import Axios from 'axios';
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -67,7 +68,13 @@ export default function Header(props){
     openGenreModal(!openGenre)
   }
  
-  {/** Fake Data Stuff (to make sure that we can connec) */}
+  const [dfResults, setDfResults] = useState([]);
+  useEffect( () => {
+    let url = "http://localhost:3002/dramaFiction" 
+    Axios.get(url).then((response) => {
+      setDfResults(response.data);
+    })
+  }, []);
     
 
   return (
@@ -181,6 +188,11 @@ export default function Header(props){
               <DialogContent>
                 <DialogContentText>
                   Books that are Drama or Fiction
+                  {dfResults.map((val) => {
+                    <div className='card'>
+                    <BookCard Title={val.title} Author={val.authorName}/>
+                    </div>
+                  })}
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
