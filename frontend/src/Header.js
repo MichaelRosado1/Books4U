@@ -17,6 +17,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import BookCard from "./BookList"; 
 import API from "./MockData";
+import AuthorCard from "./AuthorCard"; 
 
 import {Modal} from 'react-responsive-modal';
 
@@ -68,13 +69,25 @@ export default function Header(props){
     openGenreModal(!openGenre)
   }
  
+  const [DFMade, setDFMade] = useState(false);
   const [dfResults, setDfResults] = useState([]);
   useEffect( () => {
     let url = "http://localhost:3002/dramaFiction" 
+    console.log("fml")
     Axios.get(url).then((response) => {
       setDfResults(response.data);
     })
-  }, []);
+  }, [DFMade]);
+
+  const [AuthMade, setAuthMade] = useState(false);
+  const [AuthResults, setAuthResults] = useState([]);
+  useEffect( () => {
+    let url = "http://localhost:3002/authorRatings" 
+    console.log("fml")
+    Axios.get(url).then((response) => {
+      setAuthResults(response.data);
+    })
+  }, [AuthMade]);
     
 
   return (
@@ -173,6 +186,12 @@ export default function Header(props){
               <DialogContent>
                 <DialogContentText>
                   Average Author Rating
+                  {AuthResults.map((val) => {
+                    return(
+                    <div className='card'>
+                    <AuthorCard Title={val.title} Rating={val.rating}/>
+                    </div>)
+                  })}
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
@@ -189,9 +208,10 @@ export default function Header(props){
                 <DialogContentText>
                   Books that are Drama or Fiction
                   {dfResults.map((val) => {
+                    return(
                     <div className='card'>
                     <BookCard Title={val.title} Author={val.authorName}/>
-                    </div>
+                    </div>)
                   })}
                 </DialogContentText>
               </DialogContent>
