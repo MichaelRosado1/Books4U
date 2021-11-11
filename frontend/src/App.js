@@ -31,6 +31,8 @@ function App() {
     //   }).catch((e) => console.log(e));
   }
 
+  const updateReview = (
+
   const handleChange = (searchVal) => {
     setSearchTerm(searchVal);
   };
