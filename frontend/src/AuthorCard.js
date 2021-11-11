@@ -22,8 +22,8 @@ import axios from 'axios'
  ***/
 
 export default function BasicCard(props) {
-	let Rating = props.Rating;
-    let Author = props.Author;
+	let Rating = props.rating;
+    let Author = props.authorName;
 
   
 
