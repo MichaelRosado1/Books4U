@@ -189,7 +189,7 @@ export default function Header(props){
                   {AuthResults.map((val) => {
                     return(
                     <div className='card'>
-                    <AuthorCard Author={val.authorName} Rating={val.rating}/>
+                    <AuthorCard Author={val.authorName} Rating={val.avg_rating}/>
                     </div>)
                   })}
                 </DialogContentText>
