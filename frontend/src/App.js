@@ -17,6 +17,7 @@ function App() {
     url += searchTerm;
     Axios.get(url).then((response) => {
       setResults(response.data);
+      console.log(response.data);
     })
   }, [searchMade]);
 
@@ -50,7 +51,7 @@ function App() {
       {results.map((val) => {
         return (
           <div className='card'>
-            <BookCard Title={val.title} Author={val.authorName}/>
+            <BookCard Title={val.title} Author={val.authorName} Rating={val.rating} />
           </div>
         )
       })}

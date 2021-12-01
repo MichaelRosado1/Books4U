@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import axios from 'axios'
-import API from "./MockData";
+import Axios from 'axios'
 
+import API from "./MockData";
 /** The List to Display Results after Searching */
 /***
  * @IMPORTANT
@@ -25,7 +25,9 @@ If you get an error in the console of the chrome tab you are trying to see the s
 
 export default function BasicCard(props) {
 
-  const [list, setList] = useState(API);
+  const [list, setList] = useState();
+  
+
 
   const addToList = i => {
     setList(prevState =>
@@ -60,35 +62,61 @@ export default function BasicCard(props) {
 
   const [post, setPost] = React.useState(null);
 
-  React.useEffect(() => {
-    axios.get('http://localhost:3002')
-      .then((response) => {
-        setPost(response.data.message);
-      });
-  }, []);
+  // React.useEffect(() => {
+  //   axios.get('http://localhost:3002')
+  //     .then((response) => {
+  //       setPost(response.data.message);
+  //     });
+  // }, []);
+
+  let Author = props.Author;
+  let ISBN = props.ISBN;
+  const [newRating, setNewRating] = useState("");
+
+  const updateRating = (ISBN) => {
+    Axios.put(`http://localhost:3002/api/update`, {
+      ISBN: ISBN,
+      Rating: newRating
+    });
+    setNewRating("")
+  };
+
+  const deleteReview = (ISBN) => {
+    Axios.delete(`http://localhost:3002/api/delete/${ISBN}`);
+  };
+
 
   const returnBooks = () => (
-    list.map((item, i) => (
-      <Card sx={{ minWidth: 275 }}>
+    // list.map((item, i) => (
+      <Card onClickAway={() => {}} sx={{ minWidth: 275 }}>
       <CardContent>
         <Typography variant="h5" component="div">
-			    {item.title}
+			    {props.Title}
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-			    {post}
+			    {props.Author}
         </Typography>
         <Typography variant="body2">
-			    Rating: {item.rating}
           <br />
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button size="small">Add to List {() => addToList(i)} </Button>
-        <Button size="small">Remove from List {() => removeFromList(i)}</Button>
-        <Button size="small">Edit Rating</Button> {/** Add functionality */}
+      <CardActions disableBackDripClick>
+        <Button size="small">Add to List {() => addToList()} </Button>
+        <Button size="small" onClick={() => { deleteReview(ISBN) }}>Remove from List</Button>
+        <form>
+          <label >Edit Rating</label>
+          <input value = {newRating} type="text" name="Rating" onChange={(e) => {
+            e.preventDefault();
+            setNewRating(e.target.value)
+          }}/>
+          <button onClick={(e) => {
+                    e.preventDefault();
+                    updateRating(ISBN);
+                }}> Update</button>
+        </form>
       </CardActions>
     </Card>
-    )));    
+    );    
       
 
 

@@ -25,6 +25,7 @@ export default function BasicCard(props) {
 	let Title = props.Title;
 	let Rating = props.Rating;
   let Author = props.Author;
+  let ISBN = props.ISBN;
 
   
 
@@ -35,16 +36,13 @@ export default function BasicCard(props) {
         <Typography variant="h5" component="div">
 			{Title}
         </Typography>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+        <Typography variant="h5" sx={{ mb: 1.5 }} color="text.secondary">
 			{Author}
         </Typography>
-        <Typography variant="body2">
-			Rating: {Rating}
           <br />
-        </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Add to List</Button>
+        <Button size="small" >Add to List</Button>
       </CardActions>
     </Card>
   );

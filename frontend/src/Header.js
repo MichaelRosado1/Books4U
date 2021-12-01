@@ -16,7 +16,6 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import BookCard from "./BookList"; 
-import API from "./MockData";
 import AuthorCard from "./AuthorCard"; 
 
 import {Modal} from 'react-responsive-modal';
@@ -51,6 +50,7 @@ export default function Header(props){
   const [openRating, openRatingModal] = React.useState(false);
   const [openGenre, openGenreModal] = React.useState(false);
 
+  
   const toggleUserModel = () => { 
     openUserModel(!openUser)
 
@@ -73,21 +73,20 @@ export default function Header(props){
   const [dfResults, setDfResults] = useState([]);
   useEffect( () => {
     let url = "http://localhost:3002/dramaFiction" 
-    console.log("fml")
     Axios.get(url).then((response) => {
       setDfResults(response.data);
     })
-  }, [DFMade]);
+  }, []);
 
   const [AuthMade, setAuthMade] = useState(false);
   const [AuthResults, setAuthResults] = useState([]);
   useEffect( () => {
     let url = "http://localhost:3002/authorRatings" 
-    console.log("fml")
     Axios.get(url).then((response) => {
       setAuthResults(response.data);
     })
-  }, [AuthMade]);
+
+  }, []);
     
 
   return (
@@ -189,7 +188,7 @@ export default function Header(props){
                   {AuthResults.map((val) => {
                     return(
                     <div className='card'>
-                    <AuthorCard Title={val.title} Rating={val.rating}/>
+                    <AuthorCard Title={val.authorName} Rating={val.avg_rating} Author={val.authorName}/>
                     </div>)
                   })}
                 </DialogContentText>
@@ -210,13 +209,14 @@ export default function Header(props){
                   {dfResults.map((val) => {
                     return(
                     <div className='card'>
-                    <BookCard Title={val.title} Author={val.authorName}/>
+                    <BookCard ISBN={val.ISBN} Title={val.book_title} Author={val.authorName}/>
                     </div>)
                   })}
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
                 <Button onClick={toggleGenreModal}>Cancel</Button>
+                <Button></Button>
               </DialogActions>
             </Dialog>
           </IconButton>
