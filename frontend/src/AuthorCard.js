@@ -22,8 +22,8 @@ import axios from 'axios'
  ***/
 
 export default function BasicCard(props) {
-	let Rating = props.Rating;
-    let Author = props.Author;
+	let Rating = props.rating;
+    let Author = props.authorName;
 
   
 
@@ -32,16 +32,13 @@ export default function BasicCard(props) {
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-			{Author}
+			Auhtor: {Author}
         </Typography>
         <Typography variant="body2">
 			Rating: {Rating}
           <br />
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button size="small">Add to List</Button>
-      </CardActions>
     </Card>
   );
 }
