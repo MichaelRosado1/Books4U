@@ -7,7 +7,6 @@ import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import green from "@material-ui/core/colors/green";
-import Search from "./SearchBar";
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -18,7 +17,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import BookCard from "./BookList"; 
 import AuthorCard from "./AuthorCard"; 
 
-import {Modal} from 'react-responsive-modal';
 
 // react.school/material-ui
 
@@ -76,7 +74,7 @@ export default function Header(props){
     Axios.get(url).then((response) => {
       setDfResults(response.data);
     })
-  }, []);
+  }, [DFMade]);
 
   const [AuthMade, setAuthMade] = useState(false);
   const [AuthResults, setAuthResults] = useState([]);
@@ -84,9 +82,10 @@ export default function Header(props){
     let url = "http://localhost:3002/authorRatings" 
     Axios.get(url).then((response) => {
       setAuthResults(response.data);
+      console.log(response.data);
     })
 
-  }, []);
+  }, [AuthMade]);
     
 
   return (
@@ -188,11 +187,7 @@ export default function Header(props){
                   {AuthResults.map((val) => {
                     return(
                     <div className='card'>
-<<<<<<< HEAD
-                    <AuthorCard Title={val.authorName} Rating={val.avg_rating} Author={val.authorName}/>
-=======
-                    <AuthorCard Author={val.authorName} Rating={val.avg_rating}/>
->>>>>>> feb6db1c2102ebb70d86985cd1729a98f182b612
+                    <AuthorCard Rating={val.avg_rating} Author={val.authorName}/>
                     </div>)
                   })}
                 </DialogContentText>

@@ -22,17 +22,15 @@ import axios from 'axios'
  ***/
 
 export default function BasicCard(props) {
-	let Rating = props.rating;
-    let Author = props.authorName;
-
+	let Rating = props.Rating;
+  let Author = props.Author;
   
-
   //if no data is returned we shouldn't display anything
    return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-			Auhtor: {Author}
+			Author: {Author}
         </Typography>
         <Typography variant="body2">
 			Rating: {Rating}

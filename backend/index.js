@@ -82,7 +82,7 @@ app.post('/api/insert', (require, response) => {
 	})
 });
 
-app.put('/api/update/', (require, response) => {
+app.put('/api/update', (require, response) => {
 	const ISBN = require.body.ISBN;
 	const rating = require.body.rating;
 	const sqlUpdate = 'UPDATE Books4U.AverageRating SET Books4U.AverageRating.rating = ? WHERE Books4U.AverageRating.ISBN = ?';
