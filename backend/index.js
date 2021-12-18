@@ -99,3 +99,12 @@ app.put('/api/update', (require, response) => {
 app.listen(3002, () => {
 	console.log('running on port 3002');
 });
+
+let q = `CALL sqlUpdate`;
+connection.query(q , true, (error, results, fields) => {
+
+  if (error) {
+    return console.error(error.message);
+  }
+ Console.log(results[0]);
+});
